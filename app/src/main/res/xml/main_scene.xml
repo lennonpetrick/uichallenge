@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@layout/main_start"
+        motion:constraintSetEnd="@layout/main_end"
+        motion:duration="1000"
+        motion:interpolator="linear">
+
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorId="@id/recyclerView"
+            motion:touchAnchorSide="top"/>
+
+    </Transition>
+</MotionScene>
