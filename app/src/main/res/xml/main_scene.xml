@@ -10,8 +10,9 @@
 
         <OnSwipe
             motion:dragDirection="dragUp"
-            motion:touchAnchorId="@id/recyclerView"
-            motion:touchAnchorSide="top"/>
+            motion:touchAnchorId="@id/scroll_recyclerView"
+            motion:touchAnchorSide="top"
+            motion:moveWhenScrollAtTop="false" />
 
     </Transition>
 </MotionScene>
