@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@layout/const_set_header_container_start"
+        motion:constraintSetEnd="@layout/const_set_header_container_end"
+        motion:duration="1000"
+        motion:interpolator="linear">
+
+        <OnSwipe
+            motion:dragDirection="dragUp" />
+
+    </Transition>
+
+</MotionScene>

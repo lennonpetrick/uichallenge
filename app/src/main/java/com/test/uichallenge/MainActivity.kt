@@ -1,11 +1,12 @@
 package com.test.uichallenge
 
 import android.os.Bundle
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.test.uichallenge.adapter.ItemRecyclerAdapter
-import kotlinx.android.synthetic.main.main_start.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -14,21 +15,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setUpToolbar()
         setUpRecyclerView()
+        setUpAppBarLayout()
         presenter = MainPresenter(this)
         presenter.load()
     }
 
     override fun setRecyclerItems(items: List<Item>) {
         recyclerView.adapter = ItemRecyclerAdapter(items)
-    }
-
-    private fun setUpToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setIcon(R.drawable.ic_menu)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun setUpRecyclerView() {
@@ -43,5 +37,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         decoration.setDrawable(drawable!!)
 
         recyclerView.addItemDecoration(decoration)
+    }
+
+    private fun setUpAppBarLayout() {
+        appBar.addOnOffsetChangedListener { appBar, offSet ->
+            val offsetAbsolute = Math.abs(offSet)
+            val totalScrollDouble = appBar.totalScrollRange.toDouble()
+            val scrollRemaining = appBar.totalScrollRange - offsetAbsolute
+
+            val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
+            val currentMarginTop = (scrollRemaining / totalScrollDouble * -200).toInt()
+            layoutParams.topMargin = currentMarginTop
+            nestedScrollView.layoutParams = layoutParams
+
+            val percentScrolled = offsetAbsolute / totalScrollDouble
+            val pictureHeight = (percentScrolled * 400).toInt()
+
+            val progress = percentScrolled.toFloat()
+            headerContainer.progress = progress
+            (recyclerView.adapter as ItemRecyclerAdapter).changeImageWidth(pictureHeight)
+        }
     }
 }
