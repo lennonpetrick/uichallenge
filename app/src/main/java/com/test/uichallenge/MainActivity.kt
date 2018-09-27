@@ -1,6 +1,7 @@
 package com.test.uichallenge
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun setUpAppBarLayout() {
-        appBar.addOnOffsetChangedListener { appBar, offSet ->
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBar, offSet ->
             val offsetAbsolute = Math.abs(offSet)
             val totalScrollDouble = appBar.totalScrollRange.toDouble()
             val scrollRemaining = appBar.totalScrollRange - offsetAbsolute
@@ -56,6 +57,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             val progress = percentScrolled.toFloat()
             headerContainer.progress = progress
             (recyclerView.adapter as ItemRecyclerAdapter).changeImageWidth(pictureHeight)
-        }
+        })
     }
 }
